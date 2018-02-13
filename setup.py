@@ -1,5 +1,5 @@
 # based on https://raw.githubusercontent.com/pbugnion/ipywidgets_server/master/setup.py
-
+# by Pascal Bugnion
 from setuptools import setup, find_packages, Command
 from setuptools.command.sdist import sdist
 from setuptools.command.build_py import build_py
