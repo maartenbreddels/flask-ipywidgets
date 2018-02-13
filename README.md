@@ -11,4 +11,4 @@ Run example:
 $ python -m flask_ipywidgets.example1
 $ # or python -m flask_ipywidgets.example2
 ```
-And navigate to http://localhost:500/0
+And navigate to http://localhost:5000
