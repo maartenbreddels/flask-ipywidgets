@@ -1,4 +1,4 @@
-Experimental support for ipywidgets inside a flask server. See also https://github.com/pbugnion/ipywidgets_server for a standalone server.
+Experimental support for ipywidgets inside a flask server. This package is based on https://github.com/pbugnion/ipywidgets_server which is a standalone server, created by Pascal Bugnion.
 
 Install:
 ```
