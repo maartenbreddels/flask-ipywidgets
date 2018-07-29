@@ -142,7 +142,7 @@ with open(os.path.join(here, 'flask_ipywidgets', '_version.py')) as f:
 
 setup_args = {
     'name': 'flask-ipywidgets',
-    'version': version_ns['__version_info__'],
+    'version': version_ns['__version__'],
     'description': 'Ipywidget in your Flask webserver',
     'packages': find_packages(),
     'zip_safe': False,
