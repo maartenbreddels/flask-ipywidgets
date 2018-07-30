@@ -161,7 +161,11 @@ setup_args = {
         ]
     },
     'install_requires': [
-        'ipywidgets>=7.0.0'
+        'ipywidgets==7.0.0',
+        'flask>=1.0.2',
+        'gevent>=1.3.5',
+        # no longer maintained?
+        'flask_sockets>=0.2.1',
     ],
     'author': 'Maarten Breddels',
     'author_email': 'maartenbreddels@gmail.com',
