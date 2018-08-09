@@ -70,9 +70,9 @@ def kernels(ws, id, name):
                 print('unknown channel', msg['channel'])
 
 
-def app(prefix='/jupyter'):
+def app(prefix='/jupyter', app=None):
     kernel = FlaskKernel.instance()
-    app = Flask(__name__)
+    app = app or Flask(__name__)
 
     @app.template_filter()
     def ipywidget_view(widget):
