@@ -102,3 +102,9 @@ def app(prefix='/jupyter', app=None):
 def init(app):
     kernel = FlaskKernel.instance()
     sockets = Sockets(app)
+
+def main_factory(_app):
+    from gevent import pywsgi
+    from geventwebsocket.handler import WebSocketHandler
+    server = pywsgi.WSGIServer(('', 5000), _app, handler_class=WebSocketHandler)
+    return server.serve_forever
