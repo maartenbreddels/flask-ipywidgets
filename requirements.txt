@@ -1,0 +1,4 @@
+ipywidgets==7.0.0
+flask>=1.0.2
+gevent>=1.3.5
+flask_sockets>=0.2.1

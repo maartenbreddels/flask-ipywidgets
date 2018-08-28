@@ -21,7 +21,7 @@ Example demonstrating pushing values to a `ipywidget`
 s = FloatSlider(min=0.01, max=0.5, value=0.3, step=0.01)
 t = Text()
 
-l = Label(f"update every text box every {s.value}")
+l = Label("update every text box every {}".format(s.value))
 
 
 def update_text(change=None):
@@ -32,7 +32,7 @@ def push_update_text():
     while True:
         time.sleep(s.value)
         t.value = str(datetime.datetime.now())
-        l.value = f"update every text box every {s.value}"
+        l.value = "update every text box every {}".format(s.value)
 
 
 s.observe(update_text, names='value')
@@ -41,6 +41,7 @@ h_box = HBox([l, s])
 vbox = VBox([h_box, t])
 
 thread = Thread(target=push_update_text)
+thread.daemon = True
 thread.start()
 
 
@@ -50,8 +51,4 @@ def index():
 
 
 if __name__ == "__main__":
-    from gevent import pywsgi
-    from geventwebsocket.handler import WebSocketHandler
-
-    server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
-    server.serve_forever()
+    flask_ipywidgets.main_factory(app)()
