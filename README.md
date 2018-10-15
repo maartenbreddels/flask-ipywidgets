@@ -1,3 +1,6 @@
+![](https://api.travis-ci.org/maartenbreddels/flask-ipywidgets.svg?branch=master)
+
+
 Experimental support for ipywidgets inside a flask server. This package is based on https://github.com/pbugnion/ipywidgets_server which is a standalone server, created by Pascal Bugnion.
 
 Install:

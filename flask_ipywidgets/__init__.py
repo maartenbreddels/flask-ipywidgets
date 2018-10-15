@@ -1,6 +1,8 @@
 import json
-from flask import Flask, Blueprint, send_from_directory, jsonify, request
+
+from flask import Flask, Blueprint, send_from_directory, jsonify
 from flask_sockets import Sockets
+
 from .kernel import FlaskKernel, BytesWrap, WebsocketStreamWrapper
 
 _kernel_spec = {
@@ -63,7 +65,7 @@ def kernels(ws, id, name):
             kernel.session.websockets[msg_id] = ws
             if msg['channel'] == 'shell':
                 kernel.dispatch_shell(WebsocketStreamWrapper(ws, msg['channel']), [
-                                      BytesWrap(k) for k in msg_serialized])
+                    BytesWrap(k) for k in msg_serialized])
             else:
                 print('unknown channel', msg['channel'])
 
@@ -95,7 +97,7 @@ def app(prefix='/jupyter', app=None):
 
     @app.route('/static/<path:path>')
     def send_js(path):
-        app.logger.debug(f"serve static file: static/{path}")
+        app.logger.debug("serve static file: static/{}".format(path))
         return send_from_directory('static', path)
 
     sockets = Sockets(app)
@@ -103,3 +105,9 @@ def app(prefix='/jupyter', app=None):
     sockets.register_blueprint(websocket, url_prefix=prefix)
     return app
 
+
+def main_factory(_app):
+    from gevent import pywsgi
+    from geventwebsocket.handler import WebSocketHandler
+    server = pywsgi.WSGIServer(('', 5000), _app, handler_class=WebSocketHandler)
+    return server.serve_forever
