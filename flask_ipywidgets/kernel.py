@@ -45,7 +45,7 @@ class SessionWebsocket(session.Session):
             if ws.closed:
                 self.websockets.pop(key)
             else:
-                print('sending over wire:', binary_msg)
+                # print('sending over wire:', binary_msg)
                 ws.send(binary_msg)
 
 

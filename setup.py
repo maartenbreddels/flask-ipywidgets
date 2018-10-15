@@ -1,18 +1,16 @@
 # based on https://raw.githubusercontent.com/pbugnion/ipywidgets_server/master/setup.py
 # by Pascal Bugnion
-from setuptools import setup, find_packages, Command
-from setuptools.command.sdist import sdist
-from setuptools.command.build_py import build_py
-from setuptools.command.egg_info import egg_info
-
-from subprocess import check_call
-
 import os
 import sys
-
 from distutils import log
-log.set_verbosity(log.DEBUG)
+from subprocess import check_call
 
+from setuptools import setup, find_packages, Command
+from setuptools.command.build_py import build_py
+from setuptools.command.egg_info import egg_info
+from setuptools.command.sdist import sdist
+
+log.set_verbosity(log.DEBUG)
 
 here = os.path.dirname(os.path.abspath(__file__))
 node_root = os.path.join(here, 'js')
@@ -20,7 +18,7 @@ is_repo = os.path.exists(os.path.join(here, '.git'))
 
 npm_path = os.pathsep.join([
     os.path.join(node_root, 'node_modules', '.bin'),
-                os.environ.get('PATH', os.defpath),
+    os.environ.get('PATH', os.defpath),
 ])
 
 
@@ -30,6 +28,7 @@ def in_read_the_docs():
 
 def js_prerelease(command, strict=False):
     """decorator for building minified js/css prior to another command"""
+
     class DecoratedCommand(command):
         def run(self):
             jsdeps = self.distribution.get_command_obj('jsdeps')
@@ -52,6 +51,7 @@ def js_prerelease(command, strict=False):
                     log.warn(str(e))
             command.run(self)
             update_package_data(self.distribution)
+
     return DecoratedCommand
 
 
@@ -102,7 +102,8 @@ class NPM(Command):
             return
         has_npm = self.has_npm()
         if not has_npm:
-            log.error("`npm` unavailable.  If you're running this command using sudo, make sure `npm` is available to sudo")
+            log.error(
+                "`npm` unavailable.  If you're running this command using sudo, make sure `npm` is available to sudo")
 
         env = os.environ.copy()
         env['PATH'] = npm_path
@@ -139,6 +140,9 @@ version_ns = {}
 with open(os.path.join(here, 'flask_ipywidgets', '_version.py')) as f:
     exec(f.read(), {}, version_ns)
 
+# get the dependencies
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
 
 setup_args = {
     'name': 'flask-ipywidgets',
@@ -160,13 +164,7 @@ setup_args = {
             'static/dist/@jupyter-widgets/*',
         ]
     },
-    'install_requires': [
-        'ipywidgets==7.0.0',
-        'flask>=1.0.2',
-        'gevent>=1.3.5',
-        # no longer maintained?
-        'flask_sockets>=0.2.1',
-    ],
+    'install_requires': requirements,
     'author': 'Maarten Breddels',
     'author_email': 'maartenbreddels@gmail.com',
     'keywords': [
